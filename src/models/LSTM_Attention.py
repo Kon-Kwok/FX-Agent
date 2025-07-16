@@ -16,12 +16,12 @@ class Attention(nn.Module):
     def __init__(self, hidden_dim):
         super(Attention, self).__init__()
         self.attn = nn.Linear(hidden_dim, hidden_dim)
-        self.v = nn.Parameter(torch.rand(hidden_dim))
+        self.attention_vector = nn.Parameter(torch.rand(hidden_dim))
         self.softmax = nn.Softmax(dim=1)
 
     def forward(self, lstm_output):
         energy = torch.tanh(self.attn(lstm_output))
-        attn_scores = torch.einsum("bsh,h->bs", energy, self.v)
+        attn_scores = torch.einsum("bsh,h->bs", energy, self.attention_vector)
         attention_weights = self.softmax(attn_scores)
         context_vector = torch.einsum("bs,bsh->bh", attention_weights, lstm_output)
         return context_vector
@@ -174,16 +174,20 @@ if __name__ == '__main__':
     # --- 3. Define Data and Model Parameters ---
     
     # Data processing parameters
-    FEATURES = ['feature_1', 'feature_2'] # TODO: Define your feature columns
-    TARGET = 'your_target'               # TODO: Define your target column
-    SEQUENCE_LENGTH = 15                 # TODO: Define the sequence length for the LSTM
-    TEST_SIZE = 0.2                      # TODO: Define the proportion of data to be used for testing
+    # IMPORTANT: Define your feature columns and target column.
+    # Example: FEATURES = ['open', 'high', 'low', 'volume']
+    FEATURES = ['feature_1', 'feature_2']
+    # Example: TARGET = 'close'
+    TARGET = 'your_target'
+    # Sequence length for the LSTM model
+    SEQUENCE_LENGTH = 15
+    TEST_SIZE = 0.2
 
     # Model hyperparameters
-    HIDDEN_DIM = 50                      # TODO: Define the number of hidden units in the LSTM
-    NUM_LAYERS = 2                       # TODO: Define the number of LSTM layers
-    DROPOUT = 0.1                        # TODO: Define the dropout rate
-    EPOCHS = 100                         # TODO: Define the number of training epochs
+    HIDDEN_DIM = 64
+    NUM_LAYERS = 2
+    DROPOUT = 0.1
+    EPOCHS = 100
     
     # These are typically derived from the data parameters
     INPUT_DIM = len(FEATURES)

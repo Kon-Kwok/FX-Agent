@@ -1,0 +1,38 @@
+# Core Frameworks
+langchain
+langchain-community
+langchain-core
+langgraph
+python-dotenv
+llama-index
+
+# LLM Provider (example, can be changed)
+langchain-openai
+
+# Data Handling and Analysis
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.2.0
+openpyxl>=3.1.0
+
+# Data Collection
+requests
+beautifulsoup4
+# scrapy # Uncomment if needed for more complex scraping
+
+# Machine Learning - Forecasting
+torch>=2.0.0
+# tensorflow # Uncomment if you prefer TensorFlow
+matplotlib>=3.7.0
+
+# Hyperparameter Optimization
+optuna
+
+# Model Interpretability
+shap
+
+# Vector Database for RAG
+faiss-cpu # or faiss-gpu if you have a compatible GPU
+sentence-transformers
+chromadb # As an alternative or for simpler use cases
+yfinance

@@ -156,28 +156,30 @@ if __name__ == '__main__':
     print(f"Using device: {device}")
 
     # --- 2. Load and Prepare Your Data ---
-    # TODO: Replace this with your actual data loading logic.
+    # This section provides sample data for demonstration.
+    # To load your own data, uncomment the following line and replace 'your_data_file.csv'
+    # with the path to your data file. Ensure your CSV has columns for features and a target.
     # df = pd.read_csv('your_data_file.csv')
-    placeholder_data = {
-        'feature1': np.random.rand(200),
-        'feature2': np.random.rand(200),
-        'target_variable': np.random.rand(200)
+    sample_data = {
+        'feature1': np.random.uniform(low=0, high=100, size=200),
+        'feature2': np.random.uniform(low=50, high=150, size=200),
+        'target_variable': np.sin(np.linspace(0, 10, 200)) * 50 + np.random.normal(0, 5, 200)
     }
-    df = pd.DataFrame(placeholder_data)
+    df = pd.DataFrame(sample_data)
 
     # --- 3. Define Data and Model Parameters ---
     
     # Data processing parameters
-    FEATURES = ['feature1', 'feature2']  # TODO: Define your list of feature columns
-    TARGET = 'target_variable'           # TODO: Define your target column name
-    SEQUENCE_LENGTH = 30                 # TODO: Define the sequence length for the Transformer
-    TEST_SIZE = 0.2                      # TODO: Define the test set size
+    FEATURES = ['feature1', 'feature2']  # Define the list of feature columns from your data
+    TARGET = 'target_variable'           # Define the target column name you want to predict
+    SEQUENCE_LENGTH = 30                 # Sequence length for the Transformer model
+    TEST_SIZE = 0.2                      # Proportion of the dataset to allocate to the test set
 
     # Model hyperparameters
-    HIDDEN_DIM = 128                     # TODO: Define the model's hidden dimension (d_model)
-    NUM_LAYERS = 3                       # TODO: Define the number of Transformer Encoder layers
-    NUM_HEADS = 8                        # TODO: Define the number of attention heads (must be a divisor of HIDDEN_DIM)
-    EPOCHS = 150                         # TODO: Define the number of training epochs
+    HIDDEN_DIM = 128                     # Hidden dimension (d_model) of the Transformer
+    NUM_LAYERS = 3                       # Number of Transformer Encoder layers
+    NUM_HEADS = 8                        # Number of attention heads (must be a divisor of HIDDEN_DIM)
+    EPOCHS = 150                         # Number of training epochs
     
     # These are derived automatically from the parameters above
     INPUT_DIM = len(FEATURES)
