@@ -27,19 +27,19 @@ The core of FX-Agents is a multi-agent system where each agent has a distinct ro
 
 ```
 FX-Agent/
-├── data/                # Raw data and knowledge base
-├── model/               # Pre-trained models and related resources
-├── src/                 # Main source code
-│   ├── agents/          # Implementation of PA1, PA2, DA, FA
-│   ├── core/            # Core workflow graph and state management
-│   ├── models/          # Forecasting models (RNN, LSTM, etc.)
-│   ├── rag/             # RAG components (retriever, knowledge base)
-│   ├── tools/           # Tools used by agents (data fetchers, scrapers)
-│   └── utils/           # Utility scripts (data processing, optimizers)
-├── .env.example         # Environment variable template
-├── main.py              # Main entry point to run the workflow
-├── requirements.txt     # Python dependencies
-└── README.md            # This file
+├── data/                     # Raw data and knowledge base
+│   └── knowledge_base/       # Knowledge base for RAG
+├── src/                      # Main source code
+│   ├── agents/               # Implementation of PA1, PA2, DA, FA
+│   ├── configs/              # Configuration files (e.g., prompts, settings)
+│   ├── core/                 # Core workflow graph, state, and abstractions
+│   ├── legacy_models/        # Legacy forecasting model implementations
+│   ├── services/             # Services for LLM, RAG, Tools, and Forecasting
+│   └── utils/                # Utility scripts (e.g., config loader)
+├── .env.example              # Environment variable template
+├── main.py                   # Main entry point to run the workflow
+├── requirements.txt          # Python dependencies
+└── README.md                 # This file
 ```
 
 ## Installation & Setup

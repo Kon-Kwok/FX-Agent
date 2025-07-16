@@ -1,0 +1,15 @@
+# API and Environment Settings
+api_keys:
+  DeepSeek_api_key: "YOUR_API_KEY_HERE" # Best loaded from .env
+
+# File and Directory Paths
+paths:
+  knowledge_base: "data/knowledge_base"
+  structured_data: "data/Data.xlsx"
+  legacy_models_dir: "src/legacy_models"
+
+# Model Configuration
+models:
+  planning_llm: "DeepSeek"
+  decision_llm: "DeepSeek"
+  forecasting_model_name: "TFT" # Default forecasting model

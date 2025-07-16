@@ -1,25 +1,49 @@
-from langgraph.graph import StatefulGraph, END
-from src.core.workflow_state import WorkflowState
-from src.agents.planning_agent import planning_agent
-from src.agents.perception_agent import perception_agent
-from src.agents.decision_agent import decision_agent
-from src.agents.forecasting_agent import forecasting_agent
+from langgraph.graph import StateGraph, END
+from .workflow_state import AppState
 
-# 实例化工作流
-workflow = StatefulGraph(WorkflowState)
+def create_workflow(agent_map: dict, entry_point: str):
+    """
+    Creates a dynamic, router-based workflow using langgraph.
 
-# 定义节点
-workflow.add_node("planner", planning_agent)
-workflow.add_node("perceiver", perception_agent)
-workflow.add_node("decider", decision_agent)
-workflow.add_node("forecaster", forecasting_agent)
+    Args:
+        agent_map (dict): A mapping of agent names to their handler functions.
+        entry_point (str): The name of the first agent to run.
 
-# 定义边
-workflow.set_entry_point("planner")
-workflow.add_edge("planner", "perceiver")
-workflow.add_edge("perceiver", "decider")
-workflow.add_edge("decider", "forecaster")
-workflow.add_edge("forecaster", END)
+    Returns:
+        A compiled langgraph application.
+    """
+    workflow = StateGraph(AppState)
 
-# 编译工作流
-app = workflow.compile()
+    # Add all agents as nodes in the graph
+    for agent_name, agent_handler in agent_map.items():
+        workflow.add_node(agent_name, agent_handler)
+
+    # Set the entry point for the workflow
+    workflow.set_entry_point(entry_point)
+
+    # The central router logic
+    def route(state: AppState):
+        """
+        Determines the next step in the workflow based on the current state.
+        If `next_step` is not set or is 'END', the workflow finishes.
+        """
+        next_step = state.next_step
+        if not next_step or next_step == "END":
+            return END
+        if next_step in agent_map:
+            return next_step
+        # Handle cases where the next step is invalid
+        raise ValueError(f"Invalid next step specified: {next_step}")
+
+    # Add a conditional edge from every node to the router
+    # This makes the router the central decision point after each step
+    for agent_name in agent_map.keys():
+        workflow.add_conditional_edges(
+            agent_name,
+            route,
+            # The router will decide which node to go to next
+        )
+
+    # Compile the graph into a runnable application
+    app = workflow.compile()
+    return app
