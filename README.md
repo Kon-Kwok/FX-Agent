@@ -10,7 +10,7 @@ Based on LangGraph, FX-Agents implements a modular and collaborative system wher
 
 ## Framework
 
-![FX-Agents Framework](./fig1.png)
+![FX-Agents Framework](./figure1.png)
 *Figure 1: The FX-Agents Framework*
 
 The core of FX-Agents is a multi-agent system where each agent has a distinct role, designed to address a specific limitation of traditional forecasting processes. This collaborative structure enhances adaptability and efficiency in complex forecasting tasks.
